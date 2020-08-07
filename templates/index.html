@@ -1,0 +1,51 @@
+<html lang="en">
+    <head>
+        <title>English-Malayalam Machine translation</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link id="theme-style" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <script src="{{ url_for('static', filename='main.js') }}"></script>
+    </head>
+
+    <body>
+        <header>
+            <h1>English-Malayalam Machine translation</h1>
+        </header>
+        <main class="container">
+
+            <section class="source-container row">
+                <textarea id="source_content">Hello! Welcome. This is a machine translation system.</textarea>
+            </section>
+
+            <section class="actions row">
+                <button class="col" onclick="doTranslate('en', 'ml')">Translate to മലയാളം</button>
+                <button class="col" onclick="doTranslate('ml','en')">Translate to English</button>
+            </section>
+            <section class="target-container row">
+                <progress id="progress"></progress>
+                <section id="target_content"></section>
+            </section>
+        </main>
+        <footer>
+            <p>This system uses <a href="https://huggingface.co/transformers/">huggingface transformers</a> with OpusMT language models for translation.</p>
+            <p>
+                <a href="http://opus.nlpl.eu">OPUS MT</a> provides pre-trained neural translation models trained on OPUS
+                data.
+                These models can seamlessly run with the OPUS-MT transation servers that can be installed from our <a
+                    href="https://github.com/Helsinki-NLP/OPUS-MT">OPUS-MT github repository</a>. The translation
+                service is powered by <a href="https://marian-nmt.github.io">Marian Neural MT engine</a>
+            </p>
+            <p>
+                The quality of the machine translation depends on the availability of parallel corpus. Data
+                contributions by actual users are more than welcome. If you are interested in contributing translated
+                documents, please use <a href="https://opus-repository.ling.helsinki.fi">Opus repository</a> to upload
+                translated documents in various formats. This could also be translated webpages. Anyone can create an
+                account and start uploading data. You may also help us uploading additional training data at <a
+                    href="https://translate.ling.helsinki.fi/">https://translate.ling.helsinki.fi/</a>
+            </p>
+        </footer>
+        </footer>
+    </body>
+
+</html>
