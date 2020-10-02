@@ -1,3 +1,4 @@
-transformers[torch]
+transformers[torch]>=3.3.1
 gunicorn
 Flask
+regex

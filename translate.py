@@ -50,7 +50,7 @@ def translate(source_lang, target_lang, src_text):
         init()
         model = models.get("{0}-{1}".format(source_lang, target_lang))
     tokenizer = tokenizers.get("{0}-{1}".format(source_lang, target_lang))
-    translated = model.generate(**tokenizer.prepare_translation_batch(src_text))
+    translated = model.generate(**tokenizer.prepare_seq2seq_batch(src_text))
     tgt_text = [tokenizer.decode(t, skip_special_tokens=True) for t in translated]
     return "\n".join(tgt_text)
 
