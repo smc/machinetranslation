@@ -1,9 +1,7 @@
 import os
-import sys
-
-import regex
+import torch
 from flask import Flask, jsonify, render_template, request
-from transformers import MarianMTModel, MarianTokenizer
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
@@ -11,8 +9,16 @@ app = Flask(
     __name__
 )
 
-models={}
-tokenizers={}
+model=None
+tokenizer=None
+device = 0 if torch.cuda.is_available() else -1
+TASK = "translation"
+MODEL = "facebook/nllb-200-distilled-600M"
+
+lang_map = {
+    "en": 'eng_Latn',
+    "ml": 'mal_Mlym'
+}
 
 @app.route("/", defaults={"path": ""})
 def index(path):
@@ -40,33 +46,39 @@ def do_translate():
         source_lang = request.args.get("from")
         target_lang = request.args.get("to")
     src_text = text.strip().splitlines()
-    tgt_text = translate(source_lang, target_lang, src_text)
+    tgt_text = translate(lang_map[source_lang], lang_map[target_lang], src_text)
     return jsonify(translation=tgt_text)
 
-def translate(source_lang, target_lang, src_text):
-    global models, tokenizers
-    model = models.get("{0}-{1}".format(source_lang, target_lang))
+def translate(src_lang, tgt_lang, src_text):
+    """
+    Translate the text from source lang to target lang
+    """
+    global model, tokenizer
+    TASK = "translation"
     if not model:
         init()
-        model = models.get("{0}-{1}".format(source_lang, target_lang))
-    tokenizer = tokenizers.get("{0}-{1}".format(source_lang, target_lang))
-    translated = model.generate(**tokenizer.prepare_seq2seq_batch(src_text))
-    tgt_text = [tokenizer.decode(t, skip_special_tokens=True) for t in translated]
-    return "\n".join(tgt_text)
+    translation_pipeline = pipeline(TASK,
+                                    model=model,
+                                    tokenizer=tokenizer,
+                                    src_lang=src_lang,
+                                    tgt_lang=tgt_lang,
+                                    max_length=1000,
+                                    device=device)
 
-def getModel(model="en-ml"):
-    model_name = "Helsinki-NLP/opus-mt-{0}".format(model)
-    print('Preparing model %s' % model_name )
-    return MarianMTModel.from_pretrained(model_name)
+    result = translation_pipeline(src_text)
+    return result[0]['translation_text']
 
-def getTokenizer(model="en-ml"):
-    model_name = "Helsinki-NLP/opus-mt-{0}".format(model)
-    return MarianTokenizer.from_pretrained(model_name)
+def getModel():
+    print('Preparing model %s' % MODEL )
+    return AutoModelForSeq2SeqLM.from_pretrained(MODEL)
+
+def getTokenizer():
+    return AutoTokenizer.from_pretrained(MODEL)
 
 def init():
-    global models, tokenizers
-    models = {"en-ml": getModel("en-ml"), "ml-en": getModel("ml-en")}
-    tokenizers = {"en-ml": getTokenizer("en-ml"), "ml-en": getTokenizer("ml-en")}
+    global model, tokenizer
+    model = getModel()
+    tokenizer = getTokenizer()
 
 if __name__ == "__main__":
     init()

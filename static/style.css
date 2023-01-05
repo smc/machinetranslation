@@ -1,10 +1,10 @@
 @import url("https://smc.org.in/fonts/manjari.css");
 @import url("https://rsms.me/inter/inter.css");
 :root {
-  --primary-color: #00a7d0;
-  --bg-color: #eee;
-  --text-color: #242424;
-  --white: #ffffff;
+  --primary-color: hsl(191.8, 100%, 40.8%);
+  --bg-color: hsl(191.8, 100%, 100%);
+  --text-color: hsl(191.8, 100%, 10.8%);
+  --white:  hsl(191.8, 100%, 98%);
 }
 
 html {
@@ -42,7 +42,7 @@ h1 {
 .container {
   display: block;
   padding: 1em;
-  background-color: var(--white);
+  background-color: var(--bg-color);
 }
 
 .row,
@@ -78,6 +78,7 @@ h1 {
 button {
   padding: 10px;
   font-weight: 800;
+  color: var(--primary-color);
 }
 
 progress {
