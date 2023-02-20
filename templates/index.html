@@ -19,8 +19,8 @@
             </section>
 
             <section class="actions row">
-                <button class="col" onclick="doTranslate('en', 'ml')">Translate to മലയാളം</button>
-                <button class="col" onclick="doTranslate('ml','en')">Translate to English</button>
+                <button class="col" onclick="doTranslate('eng_Latn', 'mal_Mlym')">Translate to മലയാളം</button>
+                <button class="col" onclick="doTranslate('mal_Mlym','eng_Latn')">Translate to English</button>
             </section>
             <section class="target-container row">
                 <progress id="progress"></progress>
@@ -28,9 +28,8 @@
             </section>
         </main>
         <footer>
-            <p>This system uses <a href="https://huggingface.co/transformers/">huggingface transformers</a> with <a href="https://ai.facebook.com/research/no-language-left-behind/">NLLB language models for translation.</a> Translation might be slow as this system does not run on GPU powered computer</p>
+            <p>This system uses <a href="https://ai.facebook.com/research/no-language-left-behind/">NLLB language models for translation.</a> converted to <a  href="https://github.com/OpenNMT/CTranslate2/i">OpenNMT CTranslate2</a> models</p>
 
-        </footer>
         </footer>
     </body>
 
