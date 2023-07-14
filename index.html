@@ -1,0 +1,38 @@
+<html lang="en">
+    <head>
+        <title>English-Malayalam Machine translation</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link id="theme-style" rel="stylesheet" href="css/style.css">
+        <script src="js/main.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <h1>English-Malayalam Machine translation</h1>
+        </header>
+        <main class="container">
+            <progress id="progress"></progress>
+
+            <section class="source-container ">
+                <h2 class="lang-title lang-en" lang="en">English</h2>
+                <textarea lang="en" id="en_content">Hello! Welcome. This is a machine translation system.</textarea>
+            </section>
+            <section class="actions ">
+                <button class=" " onclick="doTranslate('en', 'ml')">➤</button>
+                <button class=" " onclick="doTranslate('ml','en')">⮜</button>
+            </section>
+            <section class="target-container ">
+                <h2 class="lang-title lang-ml" lang="ml" >മലയാളം</h2>
+                <textarea lang="ml" id="ml_content">Hello! Welcome. This is a machine translation system.</textarea>
+            </section>
+
+        </main>
+        <footer>
+            <p>Powered by <a href="https://translate.wmcloud.org">MinT machine translation system</a> by Wikimedia Foundation</p>
+
+        </footer>
+    </body>
+
+</html>
